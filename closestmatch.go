@@ -173,6 +173,14 @@ func (cm *ClosestMatch) ClosestN(searchWord string, max int) []string {
 	return matches
 }
 
+func (cm *ClosestMatch) ClosestNRank(searchWord string, max int) PairList {
+	matches := rankByWordCount(cm.match(searchWord))
+	if len(matches) < max {
+		max = len(matches)
+	}
+	return matches[:max]
+}
+
 func rankByWordCount(wordFrequencies map[string]int) PairList {
 	pl := make(PairList, len(wordFrequencies))
 	i := 0
